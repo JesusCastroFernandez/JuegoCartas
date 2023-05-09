@@ -1,0 +1,51 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class JuegoCartas {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random rnd = new Random();
+        int acumulado = 0;
+        int banca = rnd.nextInt(12) + 1;
+        boolean seguir = true;
+        
+        System.out.println("¡Bienvenido al juego de las 7 y media!");
+        System.out.println("La banca tiene una carta inicial de " + banca);
+        
+        while (acumulado < 7.5 && seguir) {
+            int carta = rnd.nextInt(12) + 1;
+            acumulado += puntuacionCarta(carta);
+            System.out.println("Has sacado una carta de " + carta + ", tu puntuación actual es de " + acumulado);
+            
+            if (acumulado < 7.5) {
+                System.out.print("¿Quieres otra carta? (true/false): ");
+                seguir = sc.nextBoolean();
+            }
+        }
+        
+        if (acumulado > 7.5) {
+            System.out.println("Te has pasado de 7.5 puntos, has perdido.");
+        } else {
+            System.out.println("Tu puntuación final es de " + acumulado);
+            
+            if (banca == 7.5) {
+                System.out.println("La banca ha obtenido 7.5 puntos, la banca gana.");
+            } else if (banca > 7.5 || acumulado > banca) {
+                System.out.println("¡Has ganado! Tu puntuación es mayor que la de la banca.");
+            } else {
+                System.out.println("La banca gana, su puntuación es mayor que la tuya.");
+            }
+        }
+    }
+    
+    public static double puntuacionCarta(int carta) {
+        if (carta >= 1 && carta <= 7) {
+            return carta;
+        } else if (carta >= 8 && carta <= 9) {
+            return 0.5;
+        } else {
+            return 1;
+        }
+    }
+}
